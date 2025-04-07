@@ -127,7 +127,7 @@ const GroupList = ({ groups, onGroupDeleted, onGroupUpdated, fontOptions }) => {
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-md w-1/3">
-            <h3 className="text-xl font-semibold mb-4">Edit Font Group</h3>
+            <h3 className="text-xl font-semibold mb-4 text-black">Edit Font Group</h3>
             <input
               type="text"
               placeholder="Group Title"
@@ -155,10 +155,11 @@ const GroupList = ({ groups, onGroupDeleted, onGroupUpdated, fontOptions }) => {
               </button>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+                className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 active:bg-red-800"
               >
                 Close
               </button>
+
             </div>
           </div>
         </div>

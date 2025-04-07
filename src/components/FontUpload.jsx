@@ -55,7 +55,7 @@ const FontUpload = ({ onFontUploaded }) => {
   };
 
   return (
-    <div className="max-w-lg mx-auto mt-10">
+    <div className="max-w-lg mx-auto mt-10 text-center">
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         <input
           type="file"

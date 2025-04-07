@@ -67,19 +67,21 @@ function App() {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-4xl font-bold mb-8">Font Group System</h1>
-      
-      {/* Pass functions to child components to update their data */}
-      <FontUpload onFontUploaded={handleFontUploaded} />
-      <FontList fonts={fonts} onFontDeleted={handleFontDeleted} />
-      <FontGroup onGroupCreated={handleGroupCreated} />
-      <GroupList 
-        groups={groups} 
-        onGroupDeleted={handleGroupDeleted} 
-        onGroupUpdated={handleGroupUpdated} 
-        fontOptions={fonts}  // Passing font options here
-      />
+    <div className="flex justify-center items-center">
+      <div className="w-full mx-auto p-6">
+        <h1 className="text-4xl font-bold mb-8 text-center">Font Group System</h1>
+        
+        {/* Pass functions to child components to update their data */}
+        <FontUpload onFontUploaded={handleFontUploaded} />
+        <FontList fonts={fonts} onFontDeleted={handleFontDeleted} />
+        <FontGroup onGroupCreated={handleGroupCreated} />
+        <GroupList 
+          groups={groups} 
+          onGroupDeleted={handleGroupDeleted} 
+          onGroupUpdated={handleGroupUpdated} 
+          fontOptions={fonts}  // Passing font options here
+        />
+      </div>
     </div>
   );
 }
