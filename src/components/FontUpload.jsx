@@ -18,7 +18,7 @@ const FontUpload = () => {
     }
 
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file_path', file);
 
     try {
       await axiosInstance.post('/createFont', formData, {
