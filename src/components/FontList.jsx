@@ -1,33 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axiosInstance from '../utils/axiosInstance';
 
-const FontList = () => {
-  const [fonts, setFonts] = useState([]);
-
-  useEffect(() => {
-    const fetchFonts = async () => {
-      try {
-        const response = await axiosInstance.get('/getFonts');
-        
-        // Check if response contains status "success" and data is an array
-        if (response.data.status === "success" && Array.isArray(response.data.data)) {
-          setFonts(response.data.data);  // Use only the 'data' array
-        } else {
-          console.error("API response is not in expected format:", response.data);
-          setFonts([]);  // Set fonts to an empty array if response is not in expected format
-        }
-      } catch (error) {
-        console.error('Error fetching fonts:', error);
+const FontList = ({ fonts, onFontDeleted }) => {
+  const handleDelete = async (fontId) => {
+    try {
+      const response = await axiosInstance.delete(`/deleteFont?id=${fontId}`);
+      console.log("response", response);
+      if (response.data.status === 'success') {
+        onFontDeleted(fontId);
+        Swal.fire({
+          icon: 'success',
+          title: response.data.data,
+        })
       }
-    };
-
-    fetchFonts();
-  }, []);
-
-  // Check if fonts is an array before calling .map()
-  if (!Array.isArray(fonts)) {
-    return <div>Error: Fonts data is not available or not in the correct format</div>;
-  }
+    } catch (error) {
+      console.error('Error deleting font:', error);
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto mt-10">
@@ -35,18 +24,40 @@ const FontList = () => {
       <table className="min-w-full bg-white shadow-md rounded-lg">
         <thead>
           <tr className="bg-gray-100 text-left">
-            <th className="px-4 py-2">Font Name</th>
-            <th className="px-4 py-2">Preview</th>
-            <th className="px-4 py-2">Action</th>
+            <th className="px-4 py-2 text-black">No</th>
+            <th className="px-4 py-2 text-black">Font Name</th>
+            <th className="px-4 py-2 text-black">Preview</th>
+            <th className="px-4 py-2 text-black">Action</th>
           </tr>
         </thead>
         <tbody>
-          {fonts.map((font) => (
+          {fonts.map((font, index) => (
             <tr key={font.id}>
-              <td className="px-4 py-2">{font.name}</td>
-              <td className="px-4 py-2">Example Style</td>
+              <td className="px-4 py-2 text-black">{index + 1}</td>
+              <td className="px-4 py-2 text-black">{font.name}</td>
+              <td className="px-4 py-2 text-black">
+              <style>
+                  {`
+                    @font-face {
+                      font-family: '${font.name}';
+                      src: url('${import.meta.env.VITE_API_BASE_URL}/uploads/fonts/${font.file_path}') format('truetype');
+                    }
+                    .font-preview-${index} {
+                      font-family: '${font.name}';
+                    }
+                  `}
+                </style>
+                <div className={`font-preview-${index}`}>
+                  Example Text in {font.name}
+                </div>
+              </td>
               <td className="px-4 py-2">
-                <button className="text-red-500 hover:text-red-700">Delete</button>
+                <button
+                  onClick={() => handleDelete(font.id)}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

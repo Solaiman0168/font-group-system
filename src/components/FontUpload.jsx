@@ -1,46 +1,67 @@
-// src/components/FontUpload.js
 import React, { useState } from 'react';
-// import axios from 'axios';
 import axiosInstance from '../utils/axiosInstance';
+import Swal from 'sweetalert2';
 
-const FontUpload = () => {
+const FontUpload = ({ onFontUploaded }) => {
   const [file, setFile] = useState(null);
 
-  const handleFileChange = (e) => {
+  const handleUploadTtfFile = (e) => {
     setFile(e.target.files[0]);
   };
 
-  const handleUpload = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!file) {
-      alert('Please select a font file.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please select a font file.',
+      });
       return;
     }
 
     const formData = new FormData();
-    formData.append('file_path', file);
+    formData.append('file', file);
 
     try {
-      await axiosInstance.post('/createFont', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      const response = await axiosInstance.post('/createFont', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
-      alert('Font uploaded successfully.');
+      console.log("response", response.data.data);
+      if (response.data.status === 'success') {
+        Swal.fire({
+          icon: 'success',
+          title: 'Font Uploaded',
+          text: "Font uploaded successfully.",
+        });
+
+        onFontUploaded(response.data.data); // Update font list after successful upload
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: response.data.message || 'Error uploading font.',
+        });
+      }
     } catch (error) {
       console.error('Error uploading font:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message || 'There was an error uploading the font.',
+      });
     }
   };
 
   return (
     <div className="max-w-lg mx-auto mt-10">
-      <h3 className="text-2xl font-semibold mb-4">Upload Font (Only TTF allowed)</h3>
-      <form onSubmit={handleUpload} className="bg-white p-6 rounded-lg shadow-md">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         <input
           type="file"
           accept=".ttf"
-          onChange={handleFileChange}
-          className="w-full p-2 mb-4 border border-gray-300 rounded"
+          onChange={handleUploadTtfFile}
+          className="w-full p-2 mb-4 border border-gray-300 rounded text-black"
         />
         <button
           type="submit"
