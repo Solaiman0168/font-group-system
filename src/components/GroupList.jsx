@@ -57,8 +57,10 @@ const GroupList = ({ groups, onGroupDeleted, onGroupUpdated, fontOptions }) => {
                 text: 'Your font group has been successfully updated!',
             });
 
+            console.log("response==UPDATE", response.data.data[0]);
+
             // Update the font groups list without page reload
-            onGroupUpdated(response.data.data);
+            onGroupUpdated(response.data.data[0]);
 
             setIsModalOpen(false);
         } else {
