@@ -51,6 +51,7 @@ function App() {
     setGroups((prevGroups) => [...prevGroups, newGroup]);
   };
 
+
   // Function to delete a font from the list (called after successful delete)
   const handleFontDeleted = (fontId) => {
     setFonts((prevFonts) => prevFonts.filter((font) => font.id !== fontId));

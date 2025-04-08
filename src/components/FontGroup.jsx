@@ -106,8 +106,9 @@ const FontGroup = ({ onGroupCreated }) => {
           text: 'Your font group has been successfully created!',
         });
 
+        console.log("responseDATAgrouplist", response.data.data[0]);
         // Call onGroupCreated to update the group list in the parent component
-        onGroupCreated(response.data.data);  // Assuming the response data contains the newly created group
+        onGroupCreated(response.data.data[0]);  // Assuming the response data contains the newly created group
 
       } else {
         Swal.fire({
@@ -125,6 +126,69 @@ const FontGroup = ({ onGroupCreated }) => {
       });
     }
   };
+
+
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  
+  //   // Validation: Ensure at least two fonts are selected
+  //   if (fontIds.length < 2) {
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Error',
+  //       text: 'You must select at least two fonts.',
+  //     });
+  //     return;
+  //   }
+  
+  //   // Create FormData to send to the backend
+  //   const formData = new FormData();
+  //   formData.append('title', title);
+  
+  //   // Append font_ids as an array
+  //   fontIds.forEach((font) => {
+  //     formData.append('font_ids[]', font.fontId); // Ensure it's an array
+  //   });
+  
+  //   try {
+  //     // Send POST request to create group
+  //     const response = await axiosInstance.post('/createGroup', formData, {
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data',  // Important to specify form-data
+  //       },
+  //     });
+  
+  //     // Success handling
+  //     if (response.data.status === 'success') {
+  //       Swal.fire({
+  //         icon: 'success',
+  //         title: 'Font Group Created',
+  //         text: 'Your font group has been successfully created!',
+  //       });
+  
+  //       // Call onGroupCreated to update the group list in the parent component
+  //       onGroupCreated(response.data.data);  // Assuming the response data contains the newly created group
+  //     } else {
+  //       // Error handling from backend response
+  //       Swal.fire({
+  //         icon: 'error',
+  //         title: 'Error',
+  //         text: response.data.message || 'There was an error creating the font group.',
+  //       });
+  //     }
+  //   } catch (error) {
+  //     // Catch any error in the request
+  //     console.error('Error creating font group:', error);
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Error',
+  //       text: 'There was an issue with the request. Please try again later.',
+  //     });
+  //   }
+  // };
+  
+
 
   return (
     <div className="max-w-4xl mx-auto mt-10">

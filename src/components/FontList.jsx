@@ -18,6 +18,8 @@ const FontList = ({ fonts, onFontDeleted }) => {
     }
   };
 
+  console.log("fonts", fonts);
+
   return (
     <div className="max-w-4xl mx-auto mt-10">
       <h3 className="text-2xl font-semibold mb-4">Uploaded Fonts</h3>
@@ -47,8 +49,19 @@ const FontList = ({ fonts, onFontDeleted }) => {
                     }
                   `}
                 </style>
+                {/* <style>
+                  {`
+                    @font-face {
+                      font-family: '${font.name}';
+                      src: url('${font.file_path}') format('truetype');
+                    }
+                    .font-preview-${index} {
+                      font-family: '${font.name}';
+                    }
+                  `}
+                </style> */}
                 <div className={`font-preview-${index}`}>
-                  Example Text in {font.name}
+                  Example style in {font.name}
                 </div>
               </td>
               <td className="px-4 py-2">

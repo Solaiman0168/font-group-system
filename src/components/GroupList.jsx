@@ -9,6 +9,8 @@ const GroupList = ({ groups, onGroupDeleted, onGroupUpdated, fontOptions }) => {
   const [updatedTitle, setUpdatedTitle] = useState('');
   const [updatedFontIds, setUpdatedFontIds] = useState([]);
 
+  // console.log("groups::::::::", groups);
+
   const handleDelete = async (groupId) => {
     try {
       const response = await axiosInstance.delete(`/deleteGroup?id=${groupId}`);
@@ -94,6 +96,7 @@ const GroupList = ({ groups, onGroupDeleted, onGroupUpdated, fontOptions }) => {
       <table className="min-w-full bg-white shadow-md rounded-lg">
         <thead>
           <tr className="bg-gray-100 text-left">
+            <th className="px-4 py-2 text-black">No</th>
             <th className="px-4 py-2 text-black">Name</th>
             <th className="px-4 py-2 text-black">Fonts</th>
             <th className="px-4 py-2 text-black">COUNT</th>
@@ -101,8 +104,9 @@ const GroupList = ({ groups, onGroupDeleted, onGroupUpdated, fontOptions }) => {
           </tr>
         </thead>
         <tbody>
-          {groups.map((group) => (
+          {groups.map((group, index) => (
             <tr key={group.id}>
+              <td className="px-4 py-2 text-black">{index + 1}</td>
               <td className="px-4 py-2 text-black">{group.title}</td>
               <td className="px-4 py-2 text-black">
                 {group.fonts && group.fonts.length > 0
@@ -110,7 +114,7 @@ const GroupList = ({ groups, onGroupDeleted, onGroupUpdated, fontOptions }) => {
                   : 'No Fonts'}
               </td>
               <td className="px-4 py-2 text-black">{group?.fonts?.length || 0}</td>
-              <td className="px-4 py-2">
+              <td className="px-4 py-2 flex">
                 <button onClick={() => handleEditClick(group)} className="text-blue-500 hover:text-blue-700">
                   Edit
                 </button>

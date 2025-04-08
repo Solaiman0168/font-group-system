@@ -28,7 +28,7 @@ const FontUpload = ({ onFontUploaded }) => {
       const response = await axiosInstance.post('/createFont', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      console.log("response", response.data.data);
+      console.log("response", response.data.data[0]);
       if (response.data.status === 'success') {
         Swal.fire({
           icon: 'success',
@@ -36,7 +36,7 @@ const FontUpload = ({ onFontUploaded }) => {
           text: "Font uploaded successfully.",
         });
 
-        onFontUploaded(response.data.data); // Update font list after successful upload
+        onFontUploaded(response.data.data[0]); // Update font list after successful upload
       } else {
         Swal.fire({
           icon: 'error',
